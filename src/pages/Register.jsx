@@ -26,26 +26,29 @@ const Register = () => {
   bodyFormData.append("email", formData.email);
   bodyFormData.append("password", formData.password);
   const onSubmit = async () => {
-    // const storage = sessionStorage.getItem("login");
     try {
       const res = await axios.post("/api/v1/users/signup", bodyFormData, {
         headers: {
           "Content-Type": "application/json",
         },
       });
+
+      console.log(res.data);
+
       if (res.status === 201) {
         toast.success("Successfully created!");
 
-        // window.location.href = "/login";
-      } else {
-        toast.error("error created!");
+        localStorage.setItem(
+          "Authorization",
+          `Bearer ${res.data.data.user.token}`
+        );
       }
     } catch (error) {
-      toast.error("error created!");
+      toast.error(error.response.data.message);
     }
   };
   return (
-    <div className="page__Login ">
+    <div className="w-fit my-[50px] mx-auto p-[20px] rounded-2xl flex items-center justify-center bg-gradient-to-tl from-[#1c1c5a] to-[#8b8080]">
       <div>
         <h3 className="text-center font-semibold  text-3xl mb-10 text-white">
           {" "}
@@ -95,7 +98,10 @@ const Register = () => {
             Register
           </button>
 
-          <Link to="/login">Login</Link>
+          <div className="flex items-center justify-end text-white">
+            <p className="mr-3">Already, have an account?</p>
+            <Link to="/login">Login</Link>
+          </div>
         </form>
       </div>
     </div>
