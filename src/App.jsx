@@ -1,19 +1,15 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
+import { RouterProvider } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import "./App.css";
+import { Fragment } from "react";
+import router from "./router";
 
 const App = () => {
   return (
-    <div className="app">
-      <BrowserRouter>
-        <Toaster />
-        <Routes>
-          <Route path="/" element={<Register />} />
-          <Route path="/Login" element={<Login />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <Fragment>
+      <Toaster position="top-center" reverseOrder={false} />
+      <RouterProvider router={router} />
+    </Fragment>
   );
 };
 
