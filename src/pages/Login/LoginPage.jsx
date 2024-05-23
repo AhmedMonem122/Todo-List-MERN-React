@@ -7,8 +7,11 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import spinner from "../../assets/images/spinner.svg";
+import useAuth from "./../../hooks/use-auth";
 
 const LoginPage = () => {
+  const { saveUserData } = useAuth();
+
   const [isLoading, setIsLoading] = useState(false);
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -38,6 +41,8 @@ const LoginPage = () => {
         );
 
         localStorage.setItem("Authorization", `Bearer ${res.data.data.token}`);
+
+        saveUserData();
       }
 
       setIsLoading(false);

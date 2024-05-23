@@ -1,13 +1,33 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { HiOutlineMenu, HiMenuAlt1 } from "react-icons/hi";
 import { Fragment, useState } from "react";
+import useAuth from "../../hooks/use-auth";
+import toast from "react-hot-toast";
+import { FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
+  const { setUserData, userData } = useAuth();
+
+  console.log(userData);
+
   const [isOpen, setIsOpen] = useState(false);
 
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setUserData(null);
+    localStorage.removeItem("Authorization");
+    navigate("/login");
+    toast.success("Logged out Successfully", {
+      duration: 3000,
+      className: "text-success px-5 fw-bolder my-3",
+    });
+    setIsOpen(false);
+  };
+
   const linkClassNames =
-    "w-full flex items-center justify-center p-[10px] rounded-full bg-white shadow-md text-purple-700 hover:bg-purple-700 hover:text-white transition-all";
+    "w-full flex items-center justify-center p-[10px] text-nowrap rounded-full bg-white shadow-md text-purple-700 hover:bg-purple-700 hover:text-white transition-all";
 
   const isActiveLinkClassNames = "!bg-purple-700 !text-white";
 
@@ -57,10 +77,16 @@ const Navbar = () => {
                     })
                   }
                 >
-                  Profile
+                  Welcome {userData?.firstName}{" "}
+                  <div className="text-xl ml-4">
+                    <FaUserCircle />
+                  </div>
                 </NavLink>
 
-                <button className={`mt-4 md:mt-0 md:ml-4 ${linkClassNames}`}>
+                <button
+                  className={`mt-4 md:mt-0 md:ml-4 ${linkClassNames}`}
+                  onClick={handleLogout}
+                >
                   Logout
                 </button>
               </div>

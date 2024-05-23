@@ -7,8 +7,11 @@ import { Link } from "react-router-dom";
 import spinner from "../../assets/images/spinner.svg";
 import { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import useAuth from "../../hooks/use-auth";
 
 const RegisterPage = () => {
+  const { saveUserData } = useAuth();
+
   const [isLoading, setIsLoading] = useState(false);
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -41,6 +44,8 @@ const RegisterPage = () => {
           "Authorization",
           `Bearer ${res.data.data.user.token}`
         );
+
+        saveUserData();
       }
 
       setIsLoading(false);
