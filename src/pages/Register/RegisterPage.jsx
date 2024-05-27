@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import axios from "../../api/axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import spinner from "../../assets/images/spinner.svg";
 import { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
@@ -14,6 +14,8 @@ const RegisterPage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isShowPassword, setIsShowPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   const registerSchema = Yup.object({
     firstName: Yup.string().required("First Name is Required").min(5).max(10),
@@ -46,6 +48,8 @@ const RegisterPage = () => {
         );
 
         saveUserData();
+
+        navigate("/todos");
       }
 
       setIsLoading(false);

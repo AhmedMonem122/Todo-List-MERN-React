@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
@@ -14,6 +14,8 @@ const LoginPage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isShowPassword, setIsShowPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   const loginSchema = Yup.object({
     email: Yup.string().required("Email is  Required").email("Invalid Email"),
@@ -43,6 +45,8 @@ const LoginPage = () => {
         localStorage.setItem("Authorization", `Bearer ${res.data.data.token}`);
 
         saveUserData();
+
+        navigate("/todos");
       }
 
       setIsLoading(false);

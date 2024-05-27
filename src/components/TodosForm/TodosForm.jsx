@@ -5,13 +5,15 @@ import toast from "react-hot-toast";
 import axios from "../../api/axios";
 import spinner from "../../assets/images/spinner.svg";
 import { useEffect, useState } from "react";
-import useAuth from "../../hooks/use-auth";
+import useTodos from "./../../hooks/use-todos";
 
 const TodosForm = () => {
+  const { getUserTodos } = useTodos();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const todosSchema = Yup.object({
-    title: Yup.string().required("Todo Title is Required").min(5).max(10),
+    title: Yup.string().required("Todo Title is Required").min(3).max(10),
   });
 
   const handleTodoSubmit = async (formValues) => {
@@ -32,6 +34,8 @@ const TodosForm = () => {
       }
 
       setIsLoading(false);
+
+      await getUserTodos();
     } catch (error) {
       toast.error(error.response.data.message);
       setIsLoading(false);
