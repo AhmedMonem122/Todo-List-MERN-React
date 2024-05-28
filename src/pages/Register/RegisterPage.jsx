@@ -49,7 +49,7 @@ const RegisterPage = () => {
 
         saveUserData();
 
-        navigate("/todos");
+        navigate("/");
       }
 
       setIsLoading(false);

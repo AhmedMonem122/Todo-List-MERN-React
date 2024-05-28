@@ -46,7 +46,7 @@ const LoginPage = () => {
 
         saveUserData();
 
-        navigate("/todos");
+        navigate("/");
       }
 
       setIsLoading(false);
@@ -128,7 +128,7 @@ const LoginPage = () => {
 
           <div className="flex items-center justify-end text-white">
             <p className="mr-3">Don&apos;t, have an account yet? make yours.</p>
-            <Link to="/">Register</Link>
+            <Link to="/register">Register</Link>
           </div>
         </form>
       </div>

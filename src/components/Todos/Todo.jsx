@@ -18,10 +18,12 @@ const Todo = ({ _id, title, completed }) => {
     isUpdateTodoLoading,
     isUpdateTodoCompletedLoading,
     isDeleteTodoLoading,
+    todos,
   } = useTodos();
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [todoTitle, setTodoTitle] = useState(title);
+  const [selectedTodoId, setSelectedTodoId] = useState("");
 
   const checkTodoTitleLength = () => {
     if (todoTitle.length < 3) {
@@ -37,6 +39,12 @@ const Todo = ({ _id, title, completed }) => {
     }
   };
 
+  const setTodoIdToSelectedId = () => {
+    const selectedTodoIdValue = todos.find((todo) => todo._id === _id)._id;
+
+    setSelectedTodoId(selectedTodoIdValue);
+  };
+
   const handleEditTodoTitle = async () => {
     setIsEditMode(!isEditMode);
 
@@ -48,6 +56,7 @@ const Todo = ({ _id, title, completed }) => {
       todoTitle.length >= 3 &&
       todoTitle.length <= 10
     ) {
+      setTodoIdToSelectedId();
       await updateTodoTitle(_id, todoTitle);
     }
 
@@ -57,6 +66,8 @@ const Todo = ({ _id, title, completed }) => {
   const handleEditTodoCompleted = async () => {
     checkTodoTitleLength();
 
+    setTodoIdToSelectedId();
+
     if (todoTitle.length >= 3 && todoTitle.length <= 10) {
       await updateTodoCompleted(_id, {
         title: todoTitle,
@@ -65,6 +76,11 @@ const Todo = ({ _id, title, completed }) => {
     }
 
     setIsEditMode(false);
+  };
+
+  const handleDeleteTodo = () => {
+    setTodoIdToSelectedId();
+    deleteUserTodo(_id);
   };
 
   return (
@@ -94,21 +110,19 @@ const Todo = ({ _id, title, completed }) => {
           className="flex items-center justify-center rounded-full bg-slate-50 text-purple-700 w-[25px] h-[25px] md:w-[40px] md:h-[40px] hover:bg-purple-700 hover:text-slate-50 transition-all"
         >
           {isEditMode ? (
-            isUpdateTodoLoading ? (
-              <img src={spinner} alt="spinner" />
-            ) : (
-              <MdEditNote />
-            )
+            <MdEditNote />
+          ) : isUpdateTodoLoading && selectedTodoId === _id ? (
+            <img src={spinner} alt="spinner" />
           ) : (
             <MdEditSquare />
           )}
         </button>
 
         <button
-          onClick={() => deleteUserTodo(_id)}
+          onClick={handleDeleteTodo}
           className="flex items-center justify-center rounded-full bg-slate-50 text-purple-700 w-[25px] h-[25px] md:w-[40px] md:h-[40px] hover:bg-purple-700 hover:text-slate-50 transition-all"
         >
-          {isDeleteTodoLoading ? (
+          {isDeleteTodoLoading && selectedTodoId === _id ? (
             <img src={spinner} alt="spinner" />
           ) : (
             <MdDeleteForever />
@@ -120,12 +134,12 @@ const Todo = ({ _id, title, completed }) => {
           className="flex items-center justify-center rounded-full bg-slate-50 text-purple-700 w-[25px] h-[25px] md:w-[40px] md:h-[40px] hover:bg-purple-700 hover:text-slate-50 transition-all"
         >
           {completed ? (
-            isUpdateTodoCompletedLoading ? (
+            isUpdateTodoCompletedLoading && selectedTodoId === _id ? (
               <img src={spinner} alt="spinner" />
             ) : (
               <MdRemoveDone />
             )
-          ) : isUpdateTodoCompletedLoading ? (
+          ) : isUpdateTodoCompletedLoading && selectedTodoId === _id ? (
             <img src={spinner} alt="spinner" />
           ) : (
             <MdDoneAll />

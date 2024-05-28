@@ -44,12 +44,13 @@ const Navbar = () => {
               <ul className="w-full flex items-center flex-col md:flex-row">
                 <li className="mb-4 md:mr-4 md:mb-0 w-full md:w-fit">
                   <NavLink
-                    to="/todos"
+                    to="/"
                     className={({ isActive }) =>
                       classNames(linkClassNames, {
                         [isActiveLinkClassNames]: isActive,
                       })
                     }
+                    onClick={() => setIsOpen(false)}
                   >
                     Your Todos
                   </NavLink>
@@ -62,6 +63,7 @@ const Navbar = () => {
                         [isActiveLinkClassNames]: isActive,
                       })
                     }
+                    onClick={() => setIsOpen(false)}
                   >
                     Profile
                   </NavLink>
@@ -76,6 +78,7 @@ const Navbar = () => {
                       [isActiveLinkClassNames]: isActive,
                     })
                   }
+                  onClick={() => setIsOpen(false)}
                 >
                   Welcome {userData?.firstName}{" "}
                   <div className="text-xl ml-4">
@@ -110,7 +113,7 @@ const Navbar = () => {
           <ul className="flex items-center justify-center">
             <li className="mr-4">
               <NavLink
-                to="/"
+                to="/register"
                 className={({ isActive }) =>
                   classNames(linkClassNames, {
                     [isActiveLinkClassNames]: isActive,
