@@ -27,8 +27,6 @@ const TodosForm = () => {
         },
       });
 
-      console.log(res.data);
-
       if (res.status === 201) {
         toast.success("Successfully created!");
       }
@@ -39,7 +37,6 @@ const TodosForm = () => {
     } catch (error) {
       toast.error(error.response.data.message);
       setIsLoading(false);
-      console.log(error);
     }
   };
 

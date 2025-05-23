@@ -9,8 +9,6 @@ import { FaUserCircle } from "react-icons/fa";
 const Navbar = () => {
   const { setUserData, userData } = useAuth();
 
-  // console.log(userData);
-
   const [isOpen, setIsOpen] = useState(false);
 
   const navigate = useNavigate();

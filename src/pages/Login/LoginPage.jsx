@@ -35,8 +35,6 @@ const LoginPage = () => {
         },
       });
 
-      console.log(res.data);
-
       if (res.status === 200) {
         toast.success(
           "Congratulations! Welcome to our Todo List Special Application."

@@ -37,8 +37,6 @@ const RegisterPage = () => {
         },
       });
 
-      console.log(res.data);
-
       if (res.status === 201) {
         toast.success("Successfully created!");
 

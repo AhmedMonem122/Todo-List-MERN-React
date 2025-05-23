@@ -22,15 +22,12 @@ const TodosContextProvider = ({ children }) => {
         },
       });
 
-      console.log(res);
-
       setIsGetTodosLoading(false);
 
       setTodos(res.data.data.todos);
     } catch (error) {
       toast.error(error.response.data.message);
       setIsGetTodosLoading(false);
-      console.log(error);
     }
   };
 
@@ -38,7 +35,7 @@ const TodosContextProvider = ({ children }) => {
     try {
       setIsUpdateTodoLoading(true);
 
-      const res = await axios.patch(
+      await axios.patch(
         `/api/v1/todos/${id}`,
         {
           title,
@@ -50,8 +47,6 @@ const TodosContextProvider = ({ children }) => {
         }
       );
 
-      console.log(res);
-
       setIsUpdateTodoLoading(false);
 
       toast.success("Title Updated Successfully!");
@@ -60,7 +55,6 @@ const TodosContextProvider = ({ children }) => {
     } catch (error) {
       toast.error(error.response.data.message);
       setIsUpdateTodoLoading(false);
-      console.log(error);
     }
   };
 
@@ -68,13 +62,11 @@ const TodosContextProvider = ({ children }) => {
     try {
       setIsUpdateTodoCompletedLoading(true);
 
-      const res = await axios.patch(`/api/v1/todos/${id}`, todoUpdateData, {
+      await axios.patch(`/api/v1/todos/${id}`, todoUpdateData, {
         headers: {
           Authorization: localStorage.getItem("Authorization"),
         },
       });
-
-      console.log(res);
 
       setIsUpdateTodoCompletedLoading(false);
 
@@ -84,7 +76,6 @@ const TodosContextProvider = ({ children }) => {
     } catch (error) {
       toast.error(error.response.data.message);
       setIsUpdateTodoCompletedLoading(false);
-      console.log(error);
     }
   };
 
@@ -92,13 +83,11 @@ const TodosContextProvider = ({ children }) => {
     try {
       setIsDeleteTodoLoading(true);
 
-      const res = await axios.delete(`/api/v1/todos/${id}`, {
+      await axios.delete(`/api/v1/todos/${id}`, {
         headers: {
           Authorization: localStorage.getItem("Authorization"),
         },
       });
-
-      console.log(res);
 
       setIsDeleteTodoLoading(false);
 
@@ -108,7 +97,6 @@ const TodosContextProvider = ({ children }) => {
     } catch (error) {
       toast.error(error.response.data.message);
       setIsDeleteTodoLoading(false);
-      console.log(error);
     }
   };
 
